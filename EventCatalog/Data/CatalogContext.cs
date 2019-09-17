@@ -15,7 +15,7 @@ namespace EventCatalog.Data
         public DbSet<EventCategory> EventCategories { get; set; }
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<Location> Locations { get; set; }
-        public DbSet<Organizer> Organizers { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace EventCatalog.Data
             modelBuilder.Entity<EventCategory>(ConfigureEventCategory);
             modelBuilder.Entity<EventType>(ConfigureEventType);
             modelBuilder.Entity<Location>(ConfigureLocation);
-            modelBuilder.Entity<Organizer>(ConfigureOrganizer);
+            
         }
 
         private void ConfigureEventsCatalog(EntityTypeBuilder<EventsCatalog> builder)
@@ -81,13 +81,6 @@ namespace EventCatalog.Data
             builder.Property(l => l.State).IsRequired().HasMaxLength(250);
             builder.Property(l => l.PostalCode).IsRequired();
         }
-
-        private void ConfigureOrganizer(EntityTypeBuilder<Organizer> builder)
-        {
-            builder.ToTable("Organizers");
-            builder.Property(o => o.Id).IsRequired().ForSqlServerUseSequenceHiLo("organizer_hilo");
-            builder.Property(o => o.Name).IsRequired().HasMaxLength(100);
-            builder.Property(o => o.PhoneNumber).IsRequired();
-        }
+     
     }
 }
