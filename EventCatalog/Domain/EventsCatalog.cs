@@ -13,6 +13,7 @@ namespace EventCatalog.Domain
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public decimal Price { get; set; }
+        public string PictureUrl { get; set; }
         public string OrganizerName { get; set; }
         public string OrganizerDescription { get; set; }
 

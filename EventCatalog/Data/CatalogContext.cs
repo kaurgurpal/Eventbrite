@@ -35,6 +35,7 @@ namespace EventCatalog.Data
             builder.Property(e => e.StartDate).IsRequired();
             builder.Property(e => e.EndDate).IsRequired();
             builder.Property(e => e.Description).IsRequired();
+            builder.Property(e => e.PictureUrl).IsRequired();
 
             //Foreign Key relation with EventCategory
             builder.HasOne(e => e.EventCategory)
@@ -51,10 +52,6 @@ namespace EventCatalog.Data
                 .WithMany()
                 .HasForeignKey(e => e.LocationId);
 
-            //Foreign Key relation with Organizer
-            builder.HasOne(e => e.Organizer)
-                .WithMany()
-                .HasForeignKey(e => e.OrganizerId);
 
         }
 
