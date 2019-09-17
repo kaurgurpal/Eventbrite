@@ -73,7 +73,7 @@ namespace EventCatalog.Data
         {
             builder.ToTable("Locations");
             builder.Property(l => l.Id).IsRequired().ForSqlServerUseSequenceHiLo("locations_hilo");
-            builder.Property(l => l.Address).IsRequired().HasMaxLength(250);
+            builder.Property(l => l.Address).IsRequired();
             builder.Property(l => l.City).IsRequired().HasMaxLength(250);
             builder.Property(l => l.State).IsRequired().HasMaxLength(250);
             builder.Property(l => l.PostalCode).IsRequired();
