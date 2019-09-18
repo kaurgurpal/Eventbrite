@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\CatalogEvent.cs" />
     <Compile Remove="Migrations\20190913060357_Initial.cs" />
     <Compile Remove="Migrations\20190913060357_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190913223009_Initial1.cs" />
