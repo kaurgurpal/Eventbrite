@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
-    <Folder Include="Data\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
