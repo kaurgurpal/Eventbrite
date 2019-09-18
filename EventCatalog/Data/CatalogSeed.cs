@@ -13,7 +13,7 @@ namespace EventCatalogAPI.Data
     {
         public static void Seed(CatalogContext context)
         {
-            context.Database.Migrate(); // we need to run ADD-Migrate Powershell command
+            context.Database.Migrate(); // We need to run ADD-Migrate Powershell command
             if (!context.EventCategories.Any())
             {
                 context.EventCategories.AddRange(GetPreConfiguredEventCategories());
