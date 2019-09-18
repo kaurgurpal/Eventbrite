@@ -16,7 +16,7 @@ namespace EventCatalogAPI.Data
         public DbSet<EventType> EventTypes { get; set; }
         public DbSet<Location> Locations { get; set; }
         
-
+        //on model creation
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EventsCatalog>(ConfigureEventsCatalog);
