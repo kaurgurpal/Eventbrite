@@ -24,16 +24,17 @@ namespace EventCatalogAPI.Data
                 context.EventTypes.AddRange(GetPreConfiguredEventTypes());
                 context.SaveChanges();
             }
-            if (!context.Events.Any())
-            {
-                context.Events.AddRange(GetPreConfiguredEvents());
-                context.SaveChanges();
-            }
             if (!context.Locations.Any())
             {
                 context.Locations.AddRange(GetPreConfiguredLocations());
                 context.SaveChanges();
             }
+            if (!context.Events.Any())
+            {
+                context.Events.AddRange(GetPreConfiguredEvents());
+                context.SaveChanges();
+            }
+            
         }
 
         private static IEnumerable<Location> GetPreConfiguredLocations()
