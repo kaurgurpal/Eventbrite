@@ -1,4 +1,4 @@
-﻿using EventCatalog.Domain;
+﻿using EventCatalogAPI.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
-namespace EventCatalog.Data
+namespace EventCatalogAPI.Data
 {
     public static class CatalogSeed
     {

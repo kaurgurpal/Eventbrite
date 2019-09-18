@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EventCatalog.Data;
+using EventCatalogAPI.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace EventCatalog
+namespace EventCatalogAPI
 {
     public class Startup
     {
@@ -27,7 +27,7 @@ namespace EventCatalog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<EventCatalogContext>(options =>
+            services.AddDbContext<CatalogContext>(options =>
             options.UseSqlServer(Configuration["ConnectionString"]));
         }
 
