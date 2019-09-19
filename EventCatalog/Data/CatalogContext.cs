@@ -73,10 +73,14 @@ namespace EventCatalogAPI.Data
         {
             builder.ToTable("Locations");
             builder.Property(l => l.Id).IsRequired().ForSqlServerUseSequenceHiLo("locations_hilo");
+            builder.Property(l => l.UserId).IsRequired();
+            builder.Property(l => l.VenueName).HasMaxLength(100);
             builder.Property(l => l.Address).IsRequired();
+            builder.Property(l => l.Address2).HasMaxLength(50);
             builder.Property(l => l.City).IsRequired().HasMaxLength(250);
             builder.Property(l => l.State).IsRequired().HasMaxLength(250);
             builder.Property(l => l.PostalCode).IsRequired();
+            builder.Property(l => l.Country).IsRequired().HasMaxLength(50);
         }
      
     }
