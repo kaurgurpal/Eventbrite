@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\CatalogCategory.cs" />
+    <Compile Remove="Domain\CatalogEvent.cs" />
+    <Compile Remove="Domain\CatalogType.cs" />
+    <Compile Remove="Domain\EventLocation.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
