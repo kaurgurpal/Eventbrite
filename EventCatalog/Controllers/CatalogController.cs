@@ -118,6 +118,53 @@ namespace EventCatalogAPI.Controllers
             return Ok(events);
         }
 
+        //Create an Event
+        [HttpPost]
+        [Route("create")]
+        public async Task<IActionResult> CreateEvent([FromBody] EventsCatalog eventObj)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _context.Events.AddAsync(eventObj);
+                    await _context.SaveChangesAsync();
+                    return Ok(eventObj.Id);
+                }
+                catch (Exception)
+                {
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
 
+        //Update an Event
+        [HttpPost]
+        [Route("update")]
+        public async Task<IActionResult> UpdateEvent([FromBody] EventsCatalog eventObj)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (_context!= null)
+                    {
+                        _context.Events.Update(eventObj);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName == "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
     }
 }
