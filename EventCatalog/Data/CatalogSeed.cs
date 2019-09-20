@@ -13,7 +13,7 @@ namespace EventCatalogAPI.Data
     {
         public static void Seed(CatalogContext context)
         {
-            context.Database.Migrate(); // we need to run ADD-Migrate Powershell command
+            context.Database.Migrate(); // We need to run ADD-Migrate Powershell command
             if (!context.EventCategories.Any())
             {
                 context.EventCategories.AddRange(GetPreConfiguredEventCategories());
@@ -41,13 +41,13 @@ namespace EventCatalogAPI.Data
         {
             return new List<Location>()
            {
-               new Location(){Address="156th ave ne",City="Redmond",State="Washington",PostalCode=98052},
-               new Location(){Address="166th ave se",City="Bellevue",State="Washington",PostalCode=98053},
-               new Location(){Address="176th ave ne",City="Kirkland",State="Washington",PostalCode=98056},
-               new Location(){Address="26th ave ne",City="vegas",State="Las Vegas",PostalCode=98057},
-               new Location(){Address="15th ave se",City="BenzCircle",State="AndraPradesh",PostalCode=98059},
-               new Location(){Address="16th ave ne",City="Redmond",State="Washington",PostalCode=98060},
-               new Location(){Address="128th ave se",City="Bellevue",State="Washington",PostalCode=98005}
+               new Location(){UserId=1,VenueName="Venue 1", Address="156th ave ne",Address2="Building 101",City="Redmond",State="Washington",PostalCode=98052,Country="USA"},
+               new Location(){UserId=1,VenueName="Venue 2",Address="166th ave se",Address2="Building 282",City="Bellevue",State="Washington",PostalCode=98053,Country="USA"},
+               new Location(){UserId=1,VenueName="Venue 3",Address="176th ave ne",Address2="Building 333",City="Kirkland",State="Washington",PostalCode=98056,Country="USA"},
+               new Location(){UserId=1,VenueName="Venue 4",Address="26th ave ne",Address2="Building 4634",City="vegas",State="Las Vegas",PostalCode=98057,Country="USA"},
+               new Location(){UserId=2,VenueName="Venue 5",Address="15th ave se",Address2="Building 234",City="BenzCircle",State="AndraPradesh",PostalCode=98059,Country="USA"},
+               new Location(){UserId=2,VenueName="Venue 6",Address="16th ave ne",Address2="Building 22",City="Redmond",State="Washington",PostalCode=98060,Country="USA"},
+               new Location(){UserId=2,VenueName="Venue 7",Address="128th ave se",Address2="Building 121",City="Bellevue",State="Washington",PostalCode=98005,Country="USA"}
            };
         }
 
