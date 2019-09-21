@@ -43,11 +43,12 @@ namespace EventCatalogAPI.Controllers
             return Ok(events);
         }
 
-        //Filtering Events according to Type, Category and Location
+        // Filtering Events according to Type, Category and Location
 
         [HttpGet]
         [Route("[action]/type/{EventTypeId}/category/{EventCategoryId}/location/{LoacationId}")]
         public async Task<IActionResult> Events(
+            [FromQuery]int? EventId,
             int? EventTypeId,
             int? EventCategoryId,
             int? LocationId,
@@ -55,7 +56,11 @@ namespace EventCatalogAPI.Controllers
            [FromQuery]int pageSize = 6)
         {
             var root = (IQueryable<EventsCatalog>)_context.Events;
-            if(EventTypeId.HasValue)
+            if (EventId.HasValue)
+            {
+                root = root.Where(e => e.Id == EventId);
+            }
+            if (EventTypeId.HasValue)
             {
                 root = root.Where(e => e.EventTypeId == EventTypeId);
             }
@@ -78,6 +83,27 @@ namespace EventCatalogAPI.Controllers
             events = ChangePictureUrl(events);
 
             return Ok(events);
+        }
+
+        // Event API for adding new event
+        // Using HttpPost to get new event information
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult<EventsCatalog>> CreateEvent(EventsCatalog eventsCatalog)
+        {
+            try
+            {
+                _context.Events.Add(eventsCatalog);
+                await _context.SaveChangesAsync();
+
+                // calling "Events" api with new Event's id to get the Event object
+                return CreatedAtAction(nameof(Events), new { EventId = eventsCatalog.Id }, eventsCatalog);
+            }
+            catch(Exception)
+            {
+                return BadRequest("Event not created !!!");
+            }
+            
         }
         // Changing Picture Url
         private List<EventsCatalog> ChangePictureUrl(List<EventsCatalog> events)
