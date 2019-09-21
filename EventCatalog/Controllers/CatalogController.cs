@@ -91,11 +91,19 @@ namespace EventCatalogAPI.Controllers
         [Route("[action]")]
         public async Task<ActionResult<EventsCatalog>> CreateEvent(EventsCatalog eventsCatalog)
         {
-            _context.Events.Add(eventsCatalog);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Events.Add(eventsCatalog);
+                await _context.SaveChangesAsync();
 
-            // calling "Events" api with new Event's id to get the Event object
-            return CreatedAtAction(nameof(Events), new { EventId = eventsCatalog.Id }, eventsCatalog);
+                // calling "Events" api with new Event's id to get the Event object
+                return CreatedAtAction(nameof(Events), new { EventId = eventsCatalog.Id }, eventsCatalog);
+            }
+            catch(Exception)
+            {
+                return BadRequest("Event not created !!!");
+            }
+            
         }
         // Changing Picture Url
         private List<EventsCatalog> ChangePictureUrl(List<EventsCatalog> events)
