@@ -120,7 +120,7 @@ namespace EventCatalogAPI.Controllers
 
        
 
-        //Update an Event
+        //Update an Event method
         [HttpPost]
         [Route("update")]
         public async Task<IActionResult> UpdateEvent([FromBody] EventsCatalog eventObj)
