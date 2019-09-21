@@ -144,6 +144,31 @@ namespace EventCatalogAPI.Controllers
             return Ok(events);
         }
 
-
+        //Update an Event method
+       [HttpPost]
+       [Route("update")]
+        public async Task<IActionResult> UpdateEvent([FromBody] EventsCatalog eventObj)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (_context != null)
+                    {
+                        _context.Events.Update(eventObj);
+                        await _context.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (ex.GetType().FullName == "Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException")
+                    {
+                        return NotFound();
+                    }
+                    return BadRequest();
+                }
+            }
+            return BadRequest();
+        }
     }
 }
