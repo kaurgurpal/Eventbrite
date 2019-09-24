@@ -145,7 +145,7 @@ namespace EventCatalogAPI.Controllers
         }
 
         //Update an Event method
-       [HttpPost]
+       [HttpPut]
        [Route("update")]
         public async Task<IActionResult> UpdateEvent([FromBody] EventsCatalog eventObj)
         {
@@ -170,5 +170,24 @@ namespace EventCatalogAPI.Controllers
             }
             return BadRequest();
         }
+
+        //Delete an Event method
+        [HttpDelete]
+        [Route("[action]")]
+        public async Task<IActionResult> delete([FromBody] EventsCatalog eventObj)
+        {
+            try
+            {
+                _context.Events.Remove(eventObj);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                return BadRequest("Error Ocurred! Event not deleted.");
+            }
+        }
+
     }
 }
