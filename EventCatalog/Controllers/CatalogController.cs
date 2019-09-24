@@ -172,20 +172,23 @@ namespace EventCatalogAPI.Controllers
         }
 
         //Delete an Event method
-        [HttpDelete]
-        [Route("[action]")]
-        public async Task<IActionResult> delete([FromBody] EventsCatalog eventObj)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> delete(int id)
         {
             try
             {
-                _context.Events.Remove(eventObj);
+                var itemObj = await _context.Events.FindAsync(id);
+                if (itemObj == null)
+                {
+                    return NotFound();
+                }
+                _context.Events.Remove(itemObj);
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return BadRequest("Error Ocurred! Event not deleted.");
+                return BadRequest(ex.Message);
             }
         }
 
