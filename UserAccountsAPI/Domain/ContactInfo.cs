@@ -21,7 +21,7 @@ namespace UserAccountsAPI.Domain
         public virtual Address HomeAddress { get; set; }
 
         //ForiegnKey relation with Address table
-        public int BillingAddressId { get; set; }
-        public virtual Address BillingAddress { get; set; }
+        //public int BillingAddressId { get; set; }
+        //public virtual Address BillingAddress { get; set; }
     }
 }

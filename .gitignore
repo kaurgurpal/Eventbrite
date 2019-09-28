@@ -263,3 +263,4 @@ __pycache__/
 # Migration Files
 EventCatalog/Migrations
 /EventCatalog/Domain/CatalogEvent.cs
+UserAccountsAPI/Migrations

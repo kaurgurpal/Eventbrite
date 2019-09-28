@@ -10,7 +10,7 @@ namespace UserAccountsAPI.Data
 {
     public class AccountsContext : DbContext
     {
-        public AccountsContext()
+        public AccountsContext(DbContextOptions options): base(options)
         { }
 
         public DbSet<ContactInfo> ContactInfos { get; set; }
@@ -50,11 +50,8 @@ namespace UserAccountsAPI.Data
 
             //Foreign Key relation with Address
             builder.HasOne(c => c.HomeAddress).WithMany()
-                .HasForeignKey(c =>c.HomeAddressId);
-
-            //Foreign Key relation with Address
-            builder.HasOne(c => c.BillingAddress).WithMany()
-                .HasForeignKey(c => c.BillingAddressId);
+                .HasForeignKey(c => c.HomeAddressId);
+                
         }
     }
 }
