@@ -146,7 +146,7 @@ namespace EventCatalogAPI.Controllers
 
         //Update an Event method
        [HttpPut]
-       [Route("update")]
+       [Route("[action]")]
         public async Task<IActionResult> UpdateEvent([FromBody] EventsCatalog eventObj)
         {
             if (ModelState.IsValid)
@@ -172,8 +172,9 @@ namespace EventCatalogAPI.Controllers
         }
 
         //Delete an Event method
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> delete(int id)
+        [HttpDelete]
+        [Route("[action]")]
+        public async Task<IActionResult> DeleteEvent(int id)
         {
             try
             {
