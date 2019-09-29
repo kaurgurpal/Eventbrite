@@ -157,7 +157,9 @@ namespace EventCatalogAPI.Controllers
                     {
                         _context.Events.Update(eventObj);
                         await _context.SaveChangesAsync();
+                        return Ok();
                     }
+                  return NotFound();
                 }
                 catch (Exception ex)
                 {
@@ -168,7 +170,11 @@ namespace EventCatalogAPI.Controllers
                     return BadRequest();
                 }
             }
-            return BadRequest();
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         //Delete an Event method
@@ -185,7 +191,7 @@ namespace EventCatalogAPI.Controllers
                 }
                 _context.Events.Remove(itemObj);
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {
