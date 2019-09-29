@@ -50,8 +50,10 @@ namespace UserAccountsAPI.Data
 
             //Foreign Key relation with Address
             builder.HasOne(c => c.HomeAddress).WithMany()
-                .HasForeignKey(c => c.HomeAddressId);
-                
+                 .HasForeignKey(c => c.HomeAddressId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(c => c.BillingAddress).WithMany()
+                .HasForeignKey(c => c.BillingAddressId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
