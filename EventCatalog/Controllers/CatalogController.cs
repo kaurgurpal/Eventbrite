@@ -146,9 +146,7 @@ namespace EventCatalogAPI.Controllers
 
         //Update an Event method
        [HttpPut]
-
        [Route("[action]")]
-
         public async Task<IActionResult> UpdateEvent([FromBody] EventsCatalog eventObj)
         {
             if (ModelState.IsValid)
@@ -159,7 +157,9 @@ namespace EventCatalogAPI.Controllers
                     {
                         _context.Events.Update(eventObj);
                         await _context.SaveChangesAsync();
+                        return Ok();
                     }
+                  return NotFound();
                 }
                 catch (Exception ex)
                 {
@@ -170,16 +170,17 @@ namespace EventCatalogAPI.Controllers
                     return BadRequest();
                 }
             }
-            return BadRequest();
+            else
+            {
+                return BadRequest();
+            }
+            
         }
 
         //Delete an Event method
-
         [HttpDelete]
         [Route("[action]")]
         public async Task<IActionResult> DeleteEvent(int id)
-
-
         {
             try
             {
@@ -190,7 +191,7 @@ namespace EventCatalogAPI.Controllers
                 }
                 _context.Events.Remove(itemObj);
                 await _context.SaveChangesAsync();
-                return NoContent();
+                return Ok();
             }
             catch (Exception ex)
             {
