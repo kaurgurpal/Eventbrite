@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{61
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCatalogAPI", "EventCatalog\EventCatalogAPI.csproj", "{549B0B4D-4215-414B-95DA-9C062718CF61}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{B3D275EC-0C93-43DF-932F-E266B593573E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVC", "WebMVC\WebMVC.csproj", "{D32042F5-2888-4D75-A2CA-0AC988AC8895}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,10 @@ Global
 		{549B0B4D-4215-414B-95DA-9C062718CF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{549B0B4D-4215-414B-95DA-9C062718CF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{549B0B4D-4215-414B-95DA-9C062718CF61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D32042F5-2888-4D75-A2CA-0AC988AC8895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D32042F5-2888-4D75-A2CA-0AC988AC8895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D32042F5-2888-4D75-A2CA-0AC988AC8895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D32042F5-2888-4D75-A2CA-0AC988AC8895}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -26,6 +34,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{612336B5-963C-4EAD-A7AA-265E69314C73} = {B8F2DD62-A7A4-4942-B8E9-EDB472E3A494}
 		{549B0B4D-4215-414B-95DA-9C062718CF61} = {612336B5-963C-4EAD-A7AA-265E69314C73}
+		{B3D275EC-0C93-43DF-932F-E266B593573E} = {B8F2DD62-A7A4-4942-B8E9-EDB472E3A494}
+		{D32042F5-2888-4D75-A2CA-0AC988AC8895} = {B3D275EC-0C93-43DF-932F-E266B593573E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49FF81AC-8D9A-4471-BF1B-89A4D51156DB}
