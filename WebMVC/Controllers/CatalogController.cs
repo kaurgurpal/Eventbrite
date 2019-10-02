@@ -16,26 +16,27 @@ namespace WebMVC.Controllers
         {
             var eventsOnPage = 10;
             var catalog = await _service.GetEventsCatalogAsync(page ?? 0, eventsOnPage, typeFilterApplied, categoryFilterApplied, locationFilterApplied);
-
-            var vm = new CatalogIndexViewModel
-            {
-                PaginationInfo = new PaginationInfo
+                       
+               var vm = new CatalogIndexViewModel
                 {
-                    ActualPage = page ?? 0,
-                    EventsPerPage = catalog.Data.Count,
-                    TotalEvents = catalog.Count,
-                    TotalPages = (int)Math.Ceiling((decimal)catalog.Count / eventsOnPage)
-                },
-                CatalogEvents = catalog.Data,
-                Categories = await _service.GetEventCategoriesAsync(),
-                Types = await _service.GetEventTypesAsync(),
-                Locations = await _service.GetEventLocationsAsync(),
-                TypesFilterApplied = typeFilterApplied ?? 0,
-                CategoryFilterApplied = categoryFilterApplied ?? 0,
-                LocationFilterApplied = locationFilterApplied ?? 0
-            };
-            vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
-            vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
+                    PaginationInfo = new PaginationInfo
+                    {
+                        ActualPage = page ?? 0,
+                        EventsPerPage = (catalog!=null)?catalog.Data.Count:0,
+                        TotalEvents = (catalog != null) ? catalog.Count:0,
+                        TotalPages = (catalog != null)?(int)Math.Ceiling((decimal)catalog.Count / eventsOnPage):1
+                    },
+                    CatalogEvents = (catalog != null) ? catalog.Data : null,
+                    Categories = await _service.GetEventCategoriesAsync(),
+                    Types = await _service.GetEventTypesAsync(),
+                    Locations = await _service.GetEventLocationsAsync(),
+                    TypesFilterApplied = typeFilterApplied ?? 0,
+                    CategoryFilterApplied = categoryFilterApplied ?? 0,
+                    LocationFilterApplied = locationFilterApplied ?? 0
+                };
+                vm.PaginationInfo.Previous = (vm.PaginationInfo.ActualPage == 0) ? "is-disabled" : "";
+                vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
+            
             return View(vm);
         }
     }

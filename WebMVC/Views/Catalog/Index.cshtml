@@ -50,10 +50,10 @@
 <section class="esh-catalog-filters">
     <div class="container">
         <form asp-action="Index" asp-controller="Catalog" method="post">
-            <label class="esh-catalog-label" data-title="brand">
+            <label class="esh-catalog-label" data-title="Type">
                 <select asp-for="@Model.TypesFilterApplied" asp-items="@Model.Types" class="esh-catalog-filter"></select>
             </label>
-            <label class="esh-catalog-label" data-title="type">
+            <label class="esh-catalog-label" data-title="Category">
                 <select asp-for="@Model.CategoryFilterApplied" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
             </label>
             <label class="esh-catalog-label" data-title="Location">
@@ -64,7 +64,7 @@
     </div>
 </section>
 <div class="container">
-    @if (Model.CatalogEvents.Count() > 0)
+    @if (Model.CatalogEvents != null)
     {
         @Html.Partial("_pagination", Model.PaginationInfo)
 
