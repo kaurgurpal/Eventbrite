@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventCatalogAPI.Data;
 using EventCatalogAPI.Domain;
+using EventCatalogAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +40,15 @@ namespace EventCatalogAPI.Controllers
                 .ToListAsync();
 
             events = ChangePictureUrl(events);
+            var model = new PaginatedEventsViewModel<EventsCatalog>
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Count = eventsCount,
+                Data = events
+            };
 
-            return Ok(events);
+            return Ok(model);
         }
 
         // Filtering Events according to Type, Category and Location
@@ -81,8 +89,14 @@ namespace EventCatalogAPI.Controllers
                 .ToListAsync();
 
             events = ChangePictureUrl(events);
-
-            return Ok(events);
+            var model = new PaginatedEventsViewModel<EventsCatalog>
+            {
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                Count = eventsCount,
+                Data = events
+            };
+            return Ok(model);
         }
 
         // Event API for adding new event
