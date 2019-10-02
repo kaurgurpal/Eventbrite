@@ -51,7 +51,7 @@ namespace WebMVC.Services
 
         public async Task<IEnumerable<SelectListItem>> GetEventLocationsAsync()
         {
-            var locationUri = ApiPaths.Catalog.GetAllEventTypes(_baseUri);
+            var locationUri = ApiPaths.Catalog.GetAllEventLocations(_baseUri);
             var dataString = await _client.GetStringAsync(locationUri);
             var items = new List<SelectListItem>
             {
