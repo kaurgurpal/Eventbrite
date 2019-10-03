@@ -17,7 +17,7 @@ namespace WebMVC.Services
         private readonly string _baseUri;
         public CatalogService(IConfiguration config, IHttpClient client)
         {
-             _baseUri = $"{config["CatalogUrl"]}/api/Catalog/";
+             _baseUri = $"{config["CatalogUrl"]}/api/Catalog/"; // need take out the config setting when we dockerize
            // _baseUri = "http://localhost:54501/api/Catalog/";
             _client = client;
         }

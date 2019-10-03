@@ -62,15 +62,15 @@ namespace EventCatalogAPI.Controllers
            [FromQuery]int pageSize = 6)
         {
             var root = (IQueryable<EventsCatalog>)_context.Events;
-            if (EventTypeId.HasValue && EventTypeId!=null)
+            if (EventTypeId.HasValue)
             {
                 root = root.Where(e => e.EventTypeId == EventTypeId);
             }
-            if (EventCategoryId.HasValue && EventCategoryId!=null)
+            if (EventCategoryId.HasValue)
             {
                 root = root.Where(e => e.EventCategoryId == EventCategoryId);
             }
-            if (LocationId.HasValue && LocationId!=null)
+            if (LocationId.HasValue)
             {
                 root = root.Where(e => e.LocationId == LocationId);
             }
@@ -80,84 +80,7 @@ namespace EventCatalogAPI.Controllers
 
             return Ok(CreateViewModel(pageIndex, pageSize, eventsCount, events));
         }
-        //Events filtered on location
-        [HttpGet]
-        [Route("[action]/location/{LocationId}")]
-        public async Task<IActionResult> EventsbyLocation(int? LocationId, 
-           [FromQuery]int pageIndex = 0,
-           [FromQuery]int pageSize = 6)
-        {
-            var root = (IQueryable<EventsCatalog>)_context.Events;
-            if (LocationId.HasValue && LocationId != null)
-            {
-                root = root.Where(e => e.LocationId == LocationId);
-            }
-            var eventsCount = await root.LongCountAsync();
-
-            var events = ChangePictureUrl(EventsByAlphabeticalOrder(root, pageIndex, pageSize));
-            return Ok(CreateViewModel(pageIndex, pageSize, eventsCount, events));
-        }
-
-        //Events filtered by category
-        [HttpGet]
-        [Route("[action]/category/{EventCategoryId}")]
-        public async Task<IActionResult> EventsbyCategory(int? EventCategoryId,
-                   [FromQuery]int pageIndex = 0,
-                   [FromQuery]int pageSize = 6)
-        {
-            var root = (IQueryable<EventsCatalog>)_context.Events;
-            if (EventCategoryId.HasValue && EventCategoryId != null)
-            {
-                root = root.Where(e => e.EventCategoryId == EventCategoryId);
-            }
-            var eventsCount = await root.LongCountAsync();
-
-            var events = ChangePictureUrl(EventsByAlphabeticalOrder(root, pageIndex, pageSize));
-            return Ok(CreateViewModel(pageIndex, pageSize, eventsCount, events));
-        }
-
-        //Events filtered by Type
-        [HttpGet]
-        [Route("[action]/type/{EventTypeId}")]
-        public async Task<IActionResult> EventsbyType(int? EventTypeId,
-                   [FromQuery]int pageIndex = 0,
-                   [FromQuery]int pageSize = 6)
-        {
-            var root = (IQueryable<EventsCatalog>)_context.Events;
-            if (EventTypeId.HasValue && EventTypeId != null)
-            {
-                root = root.Where(e => e.EventTypeId == EventTypeId);
-            }
-            var eventsCount = await root.LongCountAsync();
-
-            var events = ChangePictureUrl(EventsByAlphabeticalOrder(root, pageIndex, pageSize));
-            return Ok(CreateViewModel(pageIndex, pageSize, eventsCount, events));
-        }
-
-        //Events filtered by TypeId and CategoryId
-        [HttpGet]
-        [Route("[action]/type/{EventTypeId}/category/{EventCategoryId}")]
-        public async Task<IActionResult> EventsbyTypeandCategory(
-           int? EventTypeId,
-           int? EventCategoryId,           
-          [FromQuery]int pageIndex = 0,
-          [FromQuery]int pageSize = 6)
-        {
-            var root = (IQueryable<EventsCatalog>)_context.Events;
-            if (EventTypeId.HasValue && EventTypeId != null)
-            {
-                root = root.Where(e => e.EventTypeId == EventTypeId);
-            }
-            if (EventCategoryId.HasValue && EventCategoryId != null)
-            {
-                root = root.Where(e => e.EventCategoryId == EventCategoryId);
-            }
-            var eventsCount = await root.LongCountAsync();
-            var events = ChangePictureUrl(EventsByAlphabeticalOrder(root, pageIndex, pageSize));
-
-            return Ok(CreateViewModel(pageIndex, pageSize, eventsCount, events));
-        }
-
+        
         // Event API for adding new event
         // Using HttpPost to get new event information
         [HttpPost]
