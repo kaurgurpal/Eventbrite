@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="item">
-            <img src="~/images/Event15.jpg" alt="Package Management" class="img-responsive" />
+            <img src="~/images/Event10.jpg" alt="Package Management" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
                     Climb the heights.
@@ -64,7 +64,7 @@
     </div>
 </section>
 <div class="container">
-    @if (Model.CatalogEvents.Count()>0)
+    @if (Model.CatalogEvents != null)
     {
         @Html.Partial("_pagination", Model.PaginationInfo)
 

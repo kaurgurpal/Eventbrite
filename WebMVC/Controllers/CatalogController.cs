@@ -12,25 +12,25 @@ namespace WebMVC.Controllers
     {
         private readonly ICatalogService _service;
         public CatalogController(ICatalogService service) => _service = service;
-        public async Task<IActionResult> Index(int? typesFilterApplied, int? categoryFilterApplied, int? locationFilterApplied, int? page)
+        public async Task<IActionResult> Index(int? typeFilterApplied, int? categoryFilterApplied, int? locationFilterApplied, int? page)
         {
             var eventsOnPage = 10;
-            var catalog = await _service.GetEventsCatalogAsync(page ?? 0, eventsOnPage, typesFilterApplied, categoryFilterApplied, locationFilterApplied);
+            var catalog = await _service.GetEventsCatalogAsync(page ?? 0, eventsOnPage, typeFilterApplied, categoryFilterApplied, locationFilterApplied);
                        
                var vm = new CatalogIndexViewModel
                 {
                     PaginationInfo = new PaginationInfo
                     {
                         ActualPage = page ?? 0,
-                        EventsPerPage =catalog.Data.Count,
-                        TotalEvents = catalog.Count,
-                        TotalPages = (int)Math.Ceiling((decimal)catalog.Count / eventsOnPage)
+                        EventsPerPage = (catalog!=null)?catalog.Data.Count:0,
+                        TotalEvents = (catalog != null) ? catalog.Count:0,
+                        TotalPages = (catalog != null)?(int)Math.Ceiling((decimal)catalog.Count / eventsOnPage):1
                     },
-                    CatalogEvents = catalog.Data,
+                    CatalogEvents = (catalog != null) ? catalog.Data : null,
                     Categories = await _service.GetEventCategoriesAsync(),
                     Types = await _service.GetEventTypesAsync(),
                     Locations = await _service.GetEventLocationsAsync(),
-                    TypesFilterApplied = typesFilterApplied ?? 0,
+                    TypesFilterApplied = typeFilterApplied ?? 0,
                     CategoryFilterApplied = categoryFilterApplied ?? 0,
                     LocationFilterApplied = locationFilterApplied ?? 0
                 };
