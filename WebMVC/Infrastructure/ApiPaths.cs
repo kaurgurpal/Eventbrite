@@ -25,32 +25,15 @@ namespace WebMVC.Infrastructure
             //ApiPath for GetAllEvents
             public static string GetAllEvents(string baseUri, int page, int take, int? type, int? category, int? location)
             {
-                string filterQs = string.Empty;               
-                if (type.HasValue)
+                string filterQs = string.Empty;
+                if (type.HasValue || category.HasValue || location.HasValue)
                 {
-                    var typeQs = $"/type/{type.Value.ToString()}";
-                    filterQs = $"{typeQs}";
+                    var typeQs = (type.HasValue) ? type.Value.ToString() : " ";
+                    var categoryQs = (category.HasValue) ? category.Value.ToString() : " ";
+                    var locationQs = (location.HasValue) ? location.Value.ToString() : " ";
+                    filterQs = $"/type/{typeQs}/category/{categoryQs}/location/{locationQs}";
                 }
-                if (category.HasValue)
-                {
-                    var categoryQs = $"/category/{category.Value.ToString()}";
-                    filterQs = $"{categoryQs}";
-                }
-                if (location.HasValue)
-                {
-                    var locationQs = $"/location/{location.Value.ToString()}";
-                    filterQs = $"{locationQs}";
-                }
-                if ((type.HasValue && category.HasValue && location.HasValue) || filterQs == string.Empty)
-                    return $"{baseUri}Events{filterQs}?pageIndex={page}&pageSize={take}";
-                else if (type.HasValue && category.HasValue && !location.HasValue)
-                    return $"{baseUri}EventsbyTypeandCategory{filterQs}?pageIndex={page}&pageSize={take}";
-                else if (type.HasValue && !category.HasValue && !location.HasValue)
-                    return $"{baseUri}EventsbyType{filterQs}?pageIndex={page}&pageSize={take}";
-                else if(!type.HasValue && category.HasValue && !location.HasValue)
-                    return $"{baseUri}EventsbyCategory{filterQs}?pageIndex={page}&pageSize={take}";
-                else
-                    return $"{baseUri}EventsbyLocation{filterQs}?pageIndex={page}&pageSize={take}";
+                return $"{baseUri}Events{filterQs}?pageIndex={page}&pageSize={take}";               
             }
 
             //ApiPath for GetAllEventLocations
