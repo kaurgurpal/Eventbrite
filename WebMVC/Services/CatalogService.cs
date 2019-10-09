@@ -21,6 +21,8 @@ namespace WebMVC.Services
            // _baseUri = "http://localhost:54501/api/Catalog/";
             _client = client;
         }
+
+        
         public async Task<IEnumerable<SelectListItem>> GetEventCategoriesAsync()
         {
 
@@ -108,6 +110,14 @@ namespace WebMVC.Services
                     );
             }
             return items;
+        }
+
+        //Service to Create an event
+        public async Task<bool> CreateEventAsync(CatalogEvent catalogEvent)
+        {
+            var createEventUri = ApiPaths.Catalog.CreateEvent(_baseUri);
+            var response = await _client.PostAsync(createEventUri, catalogEvent);
+            return response.IsSuccessStatusCode;
         }
     }
 }
