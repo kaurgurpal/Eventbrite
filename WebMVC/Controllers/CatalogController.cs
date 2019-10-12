@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebMVC.Models;
 using WebMVC.Services;
@@ -18,6 +19,10 @@ namespace WebMVC.Controllers
         {
             _service = service;
             _picService = picService;
+        }
+        public async Task<IActionResult> About()
+        {
+            return View();
         }
         public async Task<IActionResult> Index(int? typesFilterApplied, int? categoryFilterApplied, int? locationFilterApplied, int? page)
         {
@@ -47,6 +52,7 @@ namespace WebMVC.Controllers
             return View(vm);
         }
 
+        [Authorize]
         public async Task<IActionResult> CreateEventForm()
         {
             var vm = new CreateEventModel();
