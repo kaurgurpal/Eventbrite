@@ -2,11 +2,11 @@
 @{
 
 }
-<b>Event Details</b>
+<h4><b>Event Details</b></h4><br/>
 <form asp-controller="Catalog" asp-action="CreateEventPost" method="post">
     <div>
         <img class="esh-catalog-thumbnail" src="@Model.Event.PictureUrl" />
-    </div>
+    </div><br/>
     <div>
         <label for="EventName">Event Name:</label><br />
         <input asp-for="@Model.Event.Name" type="text" width="1000" />
@@ -57,8 +57,8 @@
     <div>
         <label for="OrganizerDescription">Organizer Description:</label><br />
         <input asp-for="@Model.Event.OrganizerDescription" type="text" value=" " width="100" />
-    </div>
+    </div><br />
     <div>
         <input type="submit" name="Save" value="Save" width="500" />
-    </div>
+    </div><br />
 </form>

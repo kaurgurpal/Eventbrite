@@ -13,7 +13,12 @@ namespace WebMVC.Controllers
     public class CatalogController : Controller
     {
         private readonly ICatalogService _service;
-        public CatalogController(ICatalogService service) => _service = service;
+        private readonly EventPicService _picService;
+        public CatalogController(ICatalogService service, EventPicService picService)
+        {
+            _service = service;
+            _picService = picService;
+        }
         public async Task<IActionResult> Index(int? typesFilterApplied, int? categoryFilterApplied, int? locationFilterApplied, int? page)
         {
             var eventsOnPage = 10;
@@ -49,12 +54,12 @@ namespace WebMVC.Controllers
             vm.Types = await _service.GetEventTypesAsync();
             vm.Categories = await _service.GetEventCategoriesAsync();
             vm.Locations = await _service.GetEventLocationsAsync();
-            vm.Event.PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/100";
+            vm.Event.PictureUrl = _picService.GetDefaultImageUrl();
             return View(vm);
         }
         public async Task<IActionResult> CreateEventPost(CreateEventModel createEvent)
         {
-            
+            createEvent.Event.PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/100";
             await _service.CreateEventAsync(createEvent.Event);
             return View();
         }
