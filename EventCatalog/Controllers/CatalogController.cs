@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventCatalogAPI.Data;
 using EventCatalogAPI.Domain;
+using EventCatalogAPI.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,19 @@ namespace EventCatalogAPI.Controllers
             _config = config;
         }
 
+        //Helper methods to get the events in alphabetical order and returning PaginatedViewModel
+        private List<EventsCatalog> EventsByAlphabeticalOrder(IQueryable<EventsCatalog> root,int pageIndex,int pageSize)
+        {
+            return root.OrderBy(e => e.Name)
+                 .Skip(pageIndex * pageSize)
+                 .Take(pageSize).ToList();            
+
+        }
+        private PaginatedEventsViewModel<EventsCatalog> CreateViewModel(int PageIndex,int PageSize,long Count, List<EventsCatalog> events)
+        {
+            return new PaginatedEventsViewModel<EventsCatalog> { PageIndex = PageIndex, PageSize = PageSize, Count = Count, Data = events };
+        }
+
         //Getting Events in alphabetic order of Events Name 
         //with given Pagesize and PageIndex
         [HttpGet]
@@ -31,24 +45,16 @@ namespace EventCatalogAPI.Controllers
             [FromQuery]int pageIndex = 0,
             [FromQuery]int pageSize = 6)
         {
-            var eventsCount = await _context.Events.LongCountAsync();
-
-            var events = await _context.Events.OrderBy(e => e.Name)
-                .Skip(pageIndex * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            events = ChangePictureUrl(events);
-
-            return Ok(events);
+            var eventsCount = await _context.Events.LongCountAsync();        
+            var events = ChangePictureUrl(EventsByAlphabeticalOrder(_context.Events, pageIndex, pageSize));
+            return Ok(CreateViewModel(pageIndex, pageSize, eventsCount, events));
         }
 
         // Filtering Events according to Type, Category and Location
 
         [HttpGet]
-        [Route("[action]/type/{EventTypeId}/category/{EventCategoryId}/location/{LoacationId}")]
-        public async Task<IActionResult> Events(
-            [FromQuery]int? EventId,
+        [Route("[action]/type/{EventTypeId}/category/{EventCategoryId}/location/{LocationId}")]
+        public async Task<IActionResult> Events(           
             int? EventTypeId,
             int? EventCategoryId,
             int? LocationId,
@@ -56,10 +62,6 @@ namespace EventCatalogAPI.Controllers
            [FromQuery]int pageSize = 6)
         {
             var root = (IQueryable<EventsCatalog>)_context.Events;
-            if (EventId.HasValue)
-            {
-                root = root.Where(e => e.Id == EventId);
-            }
             if (EventTypeId.HasValue)
             {
                 root = root.Where(e => e.EventTypeId == EventTypeId);
@@ -73,18 +75,12 @@ namespace EventCatalogAPI.Controllers
                 root = root.Where(e => e.LocationId == LocationId);
             }
 
-            var eventsCount = await root.LongCountAsync();
+            var eventsCount = await root.LongCountAsync();            
+            var events = ChangePictureUrl(EventsByAlphabeticalOrder(root, pageIndex, pageSize));      
 
-            var events = await root.OrderBy(e => e.Name)
-                .Skip(pageIndex * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
-            events = ChangePictureUrl(events);
-
-            return Ok(events);
+            return Ok(CreateViewModel(pageIndex, pageSize, eventsCount, events));
         }
-
+        
         // Event API for adding new event
         // Using HttpPost to get new event information
         [HttpPost]
