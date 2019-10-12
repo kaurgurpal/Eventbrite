@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventCatalogAPI", "EventCat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{B3D275EC-0C93-43DF-932F-E266B593573E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVC", "WebMVC\WebMVC.csproj", "{D32042F5-2888-4D75-A2CA-0AC988AC8895}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMVC", "WebMVC\WebMVC.csproj", "{D32042F5-2888-4D75-A2CA-0AC988AC8895}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebMVC.Models;
 using WebMVC.Services;
 using WebMVC.ViewModels;
+using WebMVC.Views.CreateEventForm;
 
 namespace WebMVC.Controllers
 {
@@ -38,6 +40,23 @@ namespace WebMVC.Controllers
                 vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
             
             return View(vm);
+        }
+
+        public async Task<IActionResult> CreateEventForm()
+        {
+            var vm = new CreateEventModel();
+            vm.Event = new CatalogEvent();
+            vm.Types = await _service.GetEventTypesAsync();
+            vm.Categories = await _service.GetEventCategoriesAsync();
+            vm.Locations = await _service.GetEventLocationsAsync();
+            vm.Event.PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/100";
+            return View(vm);
+        }
+        public async Task<IActionResult> CreateEventPost(CreateEventModel createEvent)
+        {
+            
+            await _service.CreateEventAsync(createEvent.Event);
+            return View();
         }
     }
 }

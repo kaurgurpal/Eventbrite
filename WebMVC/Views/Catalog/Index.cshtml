@@ -3,6 +3,9 @@
     ViewData["Title"] = "Catalog";
     @model WebMVC.ViewModels.CatalogIndexViewModel
 }
+<form asp-action="CreateEventForm" asp-controller="Catalog" method="get">
+    <input type="submit" value="Create Event"/>
+    </form><br/>
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
