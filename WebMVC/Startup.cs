@@ -38,6 +38,7 @@ namespace WebMVC
 
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddTransient<ICatalogService, CatalogService>();
+            services.AddTransient<EventPicService, EventPicService>();
 
             services.AddTransient<IIdentityService<ApplicationUser>, IdentityService>();
 

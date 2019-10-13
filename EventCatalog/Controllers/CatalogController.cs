@@ -95,7 +95,7 @@ namespace EventCatalogAPI.Controllers
                 // calling "Events" api with new Event's id to get the Event object
                 return CreatedAtAction(nameof(Events), new { EventId = eventsCatalog.Id }, eventsCatalog);
             }
-            catch(Exception)
+            catch(Exception e)
             {
                 return BadRequest("Event not created !!!");
             }

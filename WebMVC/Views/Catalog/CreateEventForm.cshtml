@@ -1,0 +1,64 @@
+﻿@model WebMVC.Models.CreateEventModel
+@{
+
+}
+<h4><b>Event Details</b></h4><br/>
+<form asp-controller="Catalog" asp-action="CreateEventPost" method="post">
+    <div>
+        <img class="esh-catalog-thumbnail" src="@Model.Event.PictureUrl" />
+    </div><br/>
+    <div>
+        <label for="EventName">Event Name:</label><br />
+        <input asp-for="@Model.Event.Name" type="text" width="1000" />
+    </div>
+    <div>
+        <label for="Description">Event Description:</label><br />
+        <textarea asp-for="@Model.Event.Description" type="text" width="100">
+        </textarea>
+    </div>
+    <div>
+        <label data-title="Types">
+            Event Types : <br />
+            <select asp-for="@Model.Event.EventTypeId" asp-items="@Model.Types" ></select>
+        </label>
+    </div>
+    <div>
+        <label data-title="Categories">
+            Event Category : <br />
+            <select asp-for="@Model.Event.EventCategoryId" asp-items="@Model.Categories"></select>
+        </label>
+    </div>
+    <div>
+        <label data-title="Locations">
+            Event Location : <br />
+            <select asp-for="@Model.Event.LocationId" asp-items="@Model.Locations" ></select>
+        </label>
+    </div>
+    <div>
+        <label for="StartDate">Starts :</label><br />
+        <input asp-for="@Model.Event.StartDate" type="date" width="100" />
+        <emsp>
+            <input type="time" name="StartTime" />
+    </div>
+    <div>
+        <label for="EndDate">Ends :</label><br />
+        <input asp-for="@Model.Event.EndDate" type="date" width="100" />
+        <emsp>
+            <input type="time" name="EndTime" />
+    </div>
+    <div>
+        <label for="Price">Ticket Price :</label><br />
+        <input asp-for="@Model.Event.Price" type="number" value="" />
+    </div>
+    <div>
+        <label for="OrganizerName">Organizer Name:</label><br />
+        <input asp-for="@Model.Event.OrganizerName" type="text" value=" " width="100" />
+    </div>
+    <div>
+        <label for="OrganizerDescription">Organizer Description:</label><br />
+        <input asp-for="@Model.Event.OrganizerDescription" type="text" value=" " width="100" />
+    </div><br />
+    <div>
+        <input type="submit" name="Save" value="Save" width="500" />
+    </div><br />
+</form>

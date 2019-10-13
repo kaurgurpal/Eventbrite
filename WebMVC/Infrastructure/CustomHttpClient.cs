@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WebMVC.Infrastructure
@@ -31,9 +33,25 @@ namespace WebMVC.Infrastructure
             return await response.Content.ReadAsStringAsync();
         }
 
-        public Task<HttpResponseMessage> PostAsync<T>(string uri, T item, string autherizationToken = null, string autherizationMethod = "Bearer")
+        //Http request to Post T item
+        // for example to create an event.
+        public async Task<HttpResponseMessage> PostAsync<T>(string uri, T item, string autherizationToken = null, string autherizationMethod = "Bearer")
         {
-            throw new NotImplementedException();
+            using (var request = new HttpRequestMessage(HttpMethod.Post, uri))
+            {
+                var json = JsonConvert.SerializeObject(item);
+                using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
+                {
+                    request.Content = stringContent;
+
+                    using (var response = await _client
+                        .SendAsync(request))
+                    {
+                        return response;
+                        
+                    }
+                }
+            }
         }
 
         public Task<HttpResponseMessage> PutAsync<T>(string uri, T item, string autherizationToken = null, string autherizationMethod = "Bearer")

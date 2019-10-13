@@ -42,6 +42,7 @@ namespace WebMVC.Infrastructure
                 return $"{baseUri}EventLocations";
             }
 
+                       
             //ApiPath for CreateEvent(POST request)
 
             public static string CreateEvent(string baseUri)
@@ -60,6 +61,16 @@ namespace WebMVC.Infrastructure
             {
                 return $"{baseUri}DeleteEvent";
             }
+
+        }
+
+        public class Pic
+        {
+            public static string GetDefaultImage(string baseuri)
+            {
+                return $"{baseuri}100";
+            }
         }
     }
+
 }

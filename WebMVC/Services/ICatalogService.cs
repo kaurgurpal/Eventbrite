@@ -13,5 +13,8 @@ namespace WebMVC.Services
         Task<IEnumerable<SelectListItem>> GetEventCategoriesAsync();
         Task<IEnumerable<SelectListItem>> GetEventTypesAsync();
         Task<IEnumerable<SelectListItem>> GetEventLocationsAsync();
+        Task<bool> CreateEventAsync(CatalogEvent catalogEvent);
+
+
     }
 }
