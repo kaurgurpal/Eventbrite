@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebMVC", "WebMVC\WebMVC.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TokenServiceApi", "TokenServiceApi\TokenServiceApi.csproj", "{8E683DED-9D35-41CD-A66C-FE9658A8A2D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartApi", "CartApi\CartApi.csproj", "{E98AC2D9-A2FE-48BC-A841-C8DFC9573530}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartApi", "CartApi\CartApi.csproj", "{E98AC2D9-A2FE-48BC-A841-C8DFC9573530}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{E82339C7-672B-44BD-8B4D-D9F168E1460E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{E98AC2D9-A2FE-48BC-A841-C8DFC9573530}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E98AC2D9-A2FE-48BC-A841-C8DFC9573530}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E98AC2D9-A2FE-48BC-A841-C8DFC9573530}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E82339C7-672B-44BD-8B4D-D9F168E1460E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E82339C7-672B-44BD-8B4D-D9F168E1460E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E82339C7-672B-44BD-8B4D-D9F168E1460E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E82339C7-672B-44BD-8B4D-D9F168E1460E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
