@@ -83,7 +83,7 @@ services:
       context: .\WebMVC
       dockerfile: Dockerfile
     image: eventbrite/webmvc
-    container_name: webshop
+    container_name: webshopcontainer
     logging:
       driver: "json-file"
       options:
@@ -119,6 +119,6 @@ services:
   basket.data:
     image: redis
     ports:
-      - "6080:6379"  
+      - "6076:6379"  
     networks:
       - backend
