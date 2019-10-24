@@ -119,6 +119,6 @@ services:
   basket.data:
     image: redis
     ports:
-      - "6079:6379"  
+      - "6080:6379"  
     networks:
       - backend
