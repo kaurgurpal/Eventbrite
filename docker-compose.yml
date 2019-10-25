@@ -1,0 +1,124 @@
+version: '3.4'
+
+networks:
+  frontend:
+  backend:
+
+services:
+  eventcatalogapi:
+    image: eventbrite/catalogapi
+    build:
+      context: .\EventCatalog
+      dockerfile: Dockerfile
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DatabaseServer: mssqlserver
+      DatabaseName: CatalogDb
+      DatabaseUser: sa
+      DatabasePassword: ProductApi(!)
+      ExternalCatalogBaseUrl: http://localhost:6081
+    ports:
+      - "6081:80"
+    container_name: eventscatalogapi
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - mssqlserver
+
+  eventtokenserver:
+    build:
+      context: .\TokenServiceApi
+      dockerfile: Dockerfile
+    image: eventbrite/tokenapi
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      MvcClient: http://localhost:5209
+    ports:
+      - "6071:80"
+    container_name: eventstokenserviceapi
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - mssqlserver
+
+  cart:
+    build:
+      context: .\CartApi
+      dockerfile: Dockerfile
+    image: eventbrite/cartapi
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      IdentityUrl: http://192.168.0.16:6071
+      ConnectionString: basket.data
+    ports:
+      - "5066:80"
+    container_name: eventscartapi
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - basket.data
+      - eventtokenserver
+
+  
+  webmvc:
+    build:
+      context: .\WebMVC
+      dockerfile: Dockerfile
+    image: eventbrite/webmvc
+    container_name: webshopcontainer
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    environment:
+      CatalogUrl: http://eventcatalogapi
+      ASPNETCORE_ENVIRONMENT: Development
+      IdentityUrl: http://192.168.0.16:6071
+      CallBackUrl: http://localhost:5209
+      CartUrl: http://cart
+    ports:
+      - "5209:80"
+    networks:
+      - frontend
+    depends_on:
+      - eventcatalogapi
+      - eventtokenserver
+      - cart
+
+  mssqlserver:
+    image: "microsoft/mssql-server-linux:latest"
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: ProductApi(!)
+    container_name: eventssqlserver
+    ports:
+      - "1449:1433"
+    networks:
+      - backend
+
+
+  basket.data:
+    image: redis
+    ports:
+      - "6076:6379"  
+    networks:
+      - backend
