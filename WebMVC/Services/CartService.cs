@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Models.CartModels;
+using WebMVC.Models.OrderModels;
 
 namespace WebMVC.Services
 {
@@ -120,6 +121,28 @@ namespace WebMVC.Services
 
             return await context.GetTokenAsync("access_token");
 
+        }
+
+        public Order MapCartToOrder(Cart Cart)
+        {
+            var order = new Order();
+            order.OrderTotal = 0;
+
+            Cart.TicketItems.ForEach(x =>
+            {
+                order.OrderItems.Add(new OrderItem()
+                {
+                    EventId = int.Parse(x.EventId),
+
+                    PictureUrl = x.PictureUrl,
+                    EventName = x.EventName,
+                    Units = x.Quantity,
+                    UnitPrice = x.TicketPrice
+                });
+                order.OrderTotal += (x.Quantity * x.TicketPrice);
+            });
+
+            return order;
         }
     }
 }

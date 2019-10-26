@@ -36,7 +36,7 @@ namespace OrderAPI
         }
 
         public IConfiguration Configuration { get; }
-        public ILifetimeScope ApplicationContainer { get; private set; }
+        public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)

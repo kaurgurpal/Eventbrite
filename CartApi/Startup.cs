@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using CartApi.Infrastructure.Filters;
+using CartApi.Messaging.Consumers;
 using CartApi.Models;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -30,7 +29,7 @@ namespace CartApi
         public IContainer ApplicationContainer { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<ICartRepository, RedisCartRepository>();
@@ -70,6 +69,42 @@ namespace CartApi
 
             });
 
+            var builder = new ContainerBuilder();
+
+            // register a specific consumer
+            builder.RegisterType<OrderCompletedEventConsumer>();
+
+            builder.Register(context =>
+            {
+                var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
+
+
+                    var host = cfg.Host(new Uri("rabbitmq://rabbitmq/"), "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+
+
+                    // https://stackoverflow.com/questions/39573721/disable-round-robin-pattern-and-use-fanout-on-masstransit
+                    cfg.ReceiveEndpoint(host, "Eventbrite" + Guid.NewGuid().ToString(), e =>
+                    {
+
+                        e.LoadFrom(context);
+                    });
+                });
+
+                return busControl;
+            })
+                .SingleInstance()
+                .As<IBusControl>()
+                .As<IBus>();
+
+            builder.Populate(services);
+            ApplicationContainer = builder.Build();
+
+            return new AutofacServiceProvider(ApplicationContainer);
 
 
         }

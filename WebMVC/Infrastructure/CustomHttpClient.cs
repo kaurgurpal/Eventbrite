@@ -47,21 +47,7 @@ namespace WebMVC.Infrastructure
         // for example to create an event.
         public async Task<HttpResponseMessage> PostAsync<T>(string uri, T item, string autherizationToken = null, string autherizationMethod = "Bearer")
         {
-            using (var request = new HttpRequestMessage(HttpMethod.Post, uri))
-            {
-                var json = JsonConvert.SerializeObject(item);
-                using (var stringContent = new StringContent(json, Encoding.UTF8, "application/json"))
-                {
-                    request.Content = stringContent;
-
-                    using (var response = await _client
-                        .SendAsync(request))
-                    {
-                        return response;
-                        
-                    }
-                }
-            }
+            return await DoPostPutAsync(HttpMethod.Post, uri, item, autherizationToken, autherizationMethod);
         }
 
         public async Task<HttpResponseMessage> PutAsync<T>(string uri, T item, string autherizationToken = null, string autherizationMethod = "Bearer")
