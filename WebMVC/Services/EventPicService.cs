@@ -12,7 +12,7 @@ namespace WebMVC.Services
         private readonly string _baseUri;
         public EventPicService(IConfiguration config)
         {
-            _baseUri = $"{config["CatalogUrl"]}/api/pic/"; // need take out the config setting when we dockerize
+            _baseUri = $"{config["PictureUrl"]}/api/pic/"; // need take out the config setting when we dockerize
                                                                // _baseUri = "http://localhost:54501/api/pic/";
            
         }

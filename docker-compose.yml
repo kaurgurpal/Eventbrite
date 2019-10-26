@@ -65,7 +65,7 @@ services:
         max-file: "10"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      IdentityUrl: http://192.168.0.16:6071
+      IdentityUrl: http://192.168.0.7:6071
       ConnectionString: basket.data
     ports:
       - "5066:80"
@@ -76,6 +76,28 @@ services:
     depends_on:
       - basket.data
       - eventtokenserver
+
+  order:
+    build:
+      context: .\OrderApi
+      dockerfile: Dockerfile
+    image: jewels/orderapi
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      IdentityUrl: http://192.168.0.7:6071
+      SQLSERVER_HOST: mssqlserver
+      SA_PASSWORD: ProductApi(!)
+      DATABASE: OrdersDb
+    ports:
+      - "6085:80"
+    container_name: eventsorderapi
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - mssqlserver
+      - eventtokenserver
+      - rabbitmq
 
   
   webmvc:
@@ -91,10 +113,14 @@ services:
         max-file: "10"
     environment:
       CatalogUrl: http://eventcatalogapi
+      PictureUrl: http://localhost:6081
       ASPNETCORE_ENVIRONMENT: Development
-      IdentityUrl: http://192.168.0.16:6071
+      IdentityUrl: http://192.168.0.7:6071
       CallBackUrl: http://localhost:5209
       CartUrl: http://cart
+      OrderUrl: http://order
+      StripePublicKey: pk_test_bYEDa1gq58OOdoqhz0Mp4xBY00G8ruVkpW
+      StripePrivateKey: sk_test_ujEJlcmUbIZGEs1Q1PbVDsyp004eQC30LX
     ports:
       - "5209:80"
     networks:
@@ -103,6 +129,7 @@ services:
       - eventcatalogapi
       - eventtokenserver
       - cart
+      - order
 
   mssqlserver:
     image: "microsoft/mssql-server-linux:latest"
@@ -120,5 +147,18 @@ services:
     image: redis
     ports:
       - "6076:6379"  
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: eventrabbitmq
+    hostname: myrabbitmq
+    ports:
+      - "15682:15672"
+      - "5682:5672"
+      - "5681:5671"
+    volumes:
+      - ~/rabbitmq:/var/lib/rabbitmq/mnesia   
     networks:
       - backend
