@@ -16,7 +16,7 @@ using OrderAPI.Models;
 
 namespace OrderAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [Authorize]
     public class OrdersController : ControllerBase
@@ -39,7 +39,7 @@ namespace OrderAPI.Controllers
             _bus = bus;
         }
 
-        // POST api/v1/Order/new
+        // POST api/v1/Orders/new
         [Route("new")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.Accepted)]

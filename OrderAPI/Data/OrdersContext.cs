@@ -12,7 +12,7 @@ namespace OrderAPI.Data
         public DbSet<Order> Orders { get; set; }
 
         public DbSet<OrderItem> OrderItems { get; set; }
-        public OrdersContext(DbContextOptions options)
+        public OrdersContext(DbContextOptions options) : base(options)
         {
 
         }

@@ -3,12 +3,12 @@ WORKDIR /app
 EXPOSE 80
 
 COPY . .
-RUN dotnet restore OrderApi.csproj
+RUN dotnet restore OrderAPI.csproj
 
 FROM build AS publish
-RUN dotnet publish "OrderApi.csproj" -c Release -o /app
+RUN dotnet publish "OrderAPI.csproj" -c Release -o /app
 
 
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "OrderApi.dll"]
+ENTRYPOINT ["dotnet", "OrderAPI.dll"]

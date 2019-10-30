@@ -65,7 +65,7 @@ services:
         max-file: "10"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      IdentityUrl: http://192.168.0.7:6071
+      IdentityUrl: http://192.168.0.8:6071
       ConnectionString: basket.data
     ports:
       - "5066:80"
@@ -76,15 +76,21 @@ services:
     depends_on:
       - basket.data
       - eventtokenserver
+      - rabbitmq
 
   order:
     build:
       context: .\OrderApi
       dockerfile: Dockerfile
     image: jewels/orderapi
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      IdentityUrl: http://192.168.0.7:6071
+      IdentityUrl: http://192.168.0.8:6071
       SQLSERVER_HOST: mssqlserver
       SA_PASSWORD: ProductApi(!)
       DATABASE: OrdersDb
@@ -115,7 +121,7 @@ services:
       CatalogUrl: http://eventcatalogapi
       PictureUrl: http://localhost:6081
       ASPNETCORE_ENVIRONMENT: Development
-      IdentityUrl: http://192.168.0.7:6071
+      IdentityUrl: http://192.168.0.8:6071
       CallBackUrl: http://localhost:5209
       CartUrl: http://cart
       OrderUrl: http://order

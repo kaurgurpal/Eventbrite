@@ -132,7 +132,7 @@ namespace WebMVC.Services
             {
                 order.OrderItems.Add(new OrderItem()
                 {
-                    EventId = int.Parse(x.EventId),
+                    EventId = x.EventId,
 
                     PictureUrl = x.PictureUrl,
                     EventName = x.EventName,

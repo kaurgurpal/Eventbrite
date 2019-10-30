@@ -18,12 +18,14 @@ namespace WebMVC.Services
         private readonly IHttpClient _client;
         private readonly string _baseUri;
         private IHttpContextAccessor _httpContextAccessor;
+        private readonly string _createbaseUri;
         public CatalogService(IConfiguration config, IHttpClient client, IHttpContextAccessor httpContextAccessor)
         {
              _baseUri = $"{config["CatalogUrl"]}/api/Catalog/"; // need take out the config setting when we dockerize
            // _baseUri = "http://localhost:54501/api/Catalog/";
             _client = client;
             _httpContextAccessor = httpContextAccessor;
+            //_createbaseUri = $"{config["PictureUrl"]}/api/catalog/";
         }
 
         
