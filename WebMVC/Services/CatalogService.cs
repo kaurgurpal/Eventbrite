@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -15,11 +17,15 @@ namespace WebMVC.Services
     {
         private readonly IHttpClient _client;
         private readonly string _baseUri;
-        public CatalogService(IConfiguration config, IHttpClient client)
+        private IHttpContextAccessor _httpContextAccessor;
+        private readonly string _createbaseUri;
+        public CatalogService(IConfiguration config, IHttpClient client, IHttpContextAccessor httpContextAccessor)
         {
              _baseUri = $"{config["CatalogUrl"]}/api/Catalog/"; // need take out the config setting when we dockerize
            // _baseUri = "http://localhost:54501/api/Catalog/";
             _client = client;
+            _httpContextAccessor = httpContextAccessor;
+            //_createbaseUri = $"{config["PictureUrl"]}/api/catalog/";
         }
 
         
@@ -115,9 +121,18 @@ namespace WebMVC.Services
         //Service to Create an event
         public async Task<bool> CreateEventAsync(CatalogEvent catalogEvent)
         {
+            var token = await GetUserTokenAsync();
             var createEventUri = ApiPaths.Catalog.CreateEvent(_baseUri);
-            var response = await _client.PostAsync(createEventUri, catalogEvent);
+            var response = await _client.PostAsync(createEventUri, catalogEvent, token);
             return response.IsSuccessStatusCode;
+        }
+
+        async Task<string> GetUserTokenAsync()
+        {
+            var context = _httpContextAccessor.HttpContext;
+
+            return await context.GetTokenAsync("access_token");
+
         }
     }
 }

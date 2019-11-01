@@ -9,11 +9,11 @@ namespace WebMVC.Infrastructure
    public interface IHttpClient
     {
         Task<string> GetStringAsync(string uri, string autherizationToken = null, string autherizationMethod = "Bearer");
-
+        
         Task<HttpResponseMessage> PostAsync<T>(string uri, T item, string autherizationToken = null, string autherizationMethod = "Bearer");
 
         Task<HttpResponseMessage> PutAsync<T>(string uri, T item, string autherizationToken = null, string autherizationMethod = "Bearer");
 
-        Task<HttpResponseMessage> DeleteAsync<T>(string uri, string autherizationToken = null, string autherizationMethod = "Bearer");
+        Task<HttpResponseMessage> DeleteAsync(string uri, string autherizationToken = null, string autherizationMethod = "Bearer");
     }
 }
