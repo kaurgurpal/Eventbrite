@@ -9,3 +9,5 @@ Project to build eventbrite.com like site with microservices enabled in the back
 Video Demo link for Assignment 3A : https://youtu.be/FUUQ2UBi7Qs
 
 Video Demo link for Assignment 3B : https://youtu.be/XSe2FN690IQ
+
+Video Demo link for Assignment 3C : https://youtu.be/bzkLp7CaQLk
